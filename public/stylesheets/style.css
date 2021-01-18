@@ -1,0 +1,87 @@
+body {
+    background-color: black;
+    color: greenyellow;
+}
+
+form.signup, form.login {
+    margin-top: 50px;
+}
+
+.jumbotron {
+    background-image: url("../img/dicebackground2.jpg");
+    text-align: center;
+    padding-bottom: 5rem;
+    padding-top: 2rem;
+    border-bottom-style: ridge;
+    border-bottom-width: 1rem;
+}
+
+.member-name {
+    color: black;
+}
+
+.wish-list, .own, .filter-by {
+    position: relative;
+    float: left;
+    padding: 10px;
+}
+
+.list-group {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.card {
+    margin: 10px;
+}
+
+.card-title {
+    text-align: center;
+}
+
+.card-body {
+    background-color: black;
+    border-style: ridge;
+}
+
+a {
+    color: greenyellow;
+}
+
+.btn {
+    color: black;
+    background-color: greenyellow;
+}
+
+.col-sm {
+    padding-top: 2rem;
+}
+
+ul {
+    list-style-type: none;
+}
+
+.suggestions-drop {
+    height: 100px;
+    overflow: auto;
+    overflow-y: scroll;
+    white-space: nowrap;
+    display: inline-block;
+}
+
+.highlight {
+    background-color: greenyellow;
+    color: black;
+}
+
+/* headers on welcome page */
+
+.welcomeTitles {
+    text-align: center;
+    margin-top: 10px;
+}
+
+.hide {
+    display: none;
+}
