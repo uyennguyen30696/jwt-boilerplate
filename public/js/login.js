@@ -29,6 +29,11 @@ $(document).ready(() => {
             password: password
         })
             .then(() => {
+                // console.log(user.message==="Incorrect password")
+                // if (!user) {
+                   
+                //     window.location.replace("welcome");
+                // }
                 window.location.replace("/members");
                 // If there's an error, log the error
             })

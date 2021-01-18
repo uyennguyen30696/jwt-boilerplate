@@ -11,7 +11,7 @@ options.secretOrKey = "SECRET8080";
 
 // Tell passport we want to use a Local Strategy (login with a username/email and password)
 passport.use(
-    "login",
+    "local",
     new LocalStrategy(
         // User will sign in with email instead of username
         {

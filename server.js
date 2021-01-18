@@ -1,6 +1,6 @@
 // Require necessary npm packages
 const express = require("express");
-const passport = require("./config/passport");
+const passport = require("passport")
 
 // Setting up port and require models for syncing
 const PORT = process.env.PORT || 8080;
@@ -19,6 +19,8 @@ app.engine("handlebars", exphbs({ defaultLayout: "main" }));
 app.set("view engine", "handlebars");
 
 app.use(passport.initialize());
+// app.use(passport.session())
+// require("./config/passport.js")(passport)
 passport.authenticate();
 
 // Require routes

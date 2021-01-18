@@ -1,6 +1,7 @@
 // Require models and passport as we've configured it
 const db = require("../models");
 const passport = require("../config/passport");
+// const passport= require("passport");
 const jwt = require("jsonwebtoken");
 
 module.exports = function (app) {
@@ -12,32 +13,34 @@ module.exports = function (app) {
         // res.json(req.user);
 
         passport.authenticate(
-            "jwt",
+            "local", {session: false},
             async (err, user, info) => {
                 try {
                     if (err || !user) {
                         console.log(err);
                     }
-                    console.log(user, info);
-                    req.login(
-                        user, { session: false }, async (err) => {
-                            if (err) {
-                                return err;
-                            };
+                    console.log(user, info, "test");
+                    const payload = {
+                        email: user.email,
+                        password: user.password,
+                    }
+                    const options = {
+                        subject: `${user.id}`,
+                        expiresIn: 3600
+                    }
+                    const token = jwt.sign({ user: payload }, "SECRET8080", options);
 
-                            const payload = {
-                                email: user.email,
-                                password: user.password,
-                            }
-                            const options = {
-                                subject: `${user.id}`,
-                                expiresIn: 3600
-                            }
-                            const token = jwt.sign({ user: payload }, "SECRET8080", options);
+                    // return res.json(info);
+                    return res.json({ token });
+                    // req.login(
+                    //     user, { session: false }, async (err) => {
+                    //         if (err) {
+                    //             return err;
+                    //         };
 
-                            return res.json({ token });
-                        }
-                    );
+                           
+                    //     }
+                    // );
                 } catch (err) {
                     return err;
                 }
