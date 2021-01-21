@@ -1,0 +1,13 @@
+GET http://localhost:8080/api/user_data
+Authorization: Bearer
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoidGVzdDNAeWFob28uY29tIiwicGFzc3dvcmQiOiIkMmEkMTAkQ3ZBbGFUQjRIUEQ1NHBNUDcwVE5pdWRGWlZBQUZHWEFyNlQyTU0zYWtXYjIxWWphdVlBWkcifSwiaWF0IjoxNjExMDA3MDYwLCJleHAiOjE2MTEwMTA2NjAsInN1YiI6IjUifQ.k7-GUUvtihGb8FS046zsOTFJ93u_b_L12GZLpGD4NEo
+
+### 
+
+POST http://localhost:8080/api/login
+content-type: application/json
+
+{
+    "email": "test3@yahoo.com",
+    "password": "test"
+}

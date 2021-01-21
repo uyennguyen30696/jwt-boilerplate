@@ -17,9 +17,11 @@ module.exports = function (app) {
             async (err, user, info) => {
                 try {
                     if (err || !user) {
-                        console.log(err);
+                        // console.log(err);
+                        return next(err);
                     }
                     console.log(user, info, "test");
+                    
                     const payload = {
                         email: user.email,
                         password: user.password,
