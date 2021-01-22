@@ -6,8 +6,8 @@ var ExtractJwt = require('passport-jwt').ExtractJwt;
 const db = require("../models");
 
 var options = {};
-options.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken("secret_token");
-options.secretOrKey = "SECRET8080";
+options.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
+options.secretOrKey = "TOP_SECRET";
 
 // Tell passport we want to use a Local Strategy (login with a username/email and password)
 passport.use(
@@ -49,37 +49,18 @@ passport.serializeUser((user, cb) => {
     cb(null, user);
 });
 
-passport.deserializeUser((obj, db) => {
+passport.deserializeUser((obj, cb) => {
     cb(null, obj);
 });
 
 passport.use(
-    new JwtStrategy(options, async function(jwtPayload, done) {
-        db.User.findById(jwtPayload.sub, function (err, result) {
-            if (err) {
-                return done(err, false);
-            };
-            if (result.length === 0) {
-                return done(null, false);
-            };
-            return done(null, result);
-        });
-
-    })
+    new JwtStrategy(options, async (token, done) => {
+        try {
+          return done(null, token.user);
+        } catch (error) {
+          done(error);
+        }
+      })
 );
 
 module.exports = passport;
-
-
-// passport.use(
-//     new JwtStrategy(
-//         options,
-//         async (token, done) => {
-//             try {
-//                 return done(null, token.user);
-//             } catch (error) {
-//                 done(error);
-//             }
-//         }
-//     )
-// );

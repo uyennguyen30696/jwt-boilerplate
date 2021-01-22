@@ -6,23 +6,18 @@ const jwt = require("jsonwebtoken");
 
 module.exports = function (app) {
     app.post("/api/login", async (req, res, next) => {
-        // res.json({
-        //     email: req.user.email,
-        //     id: req.user.id
-        // });
-        // res.json(req.user);
 
         passport.authenticate(
             "local", {session: false},
             async (err, user, info) => {
                 try {
                     if (err || !user) {
-                        // console.log(err);
                         return next(err);
                     }
                     console.log(user, info, "test");
                     
                     const payload = {
+                        // _id: user._id,
                         email: user.email,
                         password: user.password,
                     }
@@ -30,7 +25,7 @@ module.exports = function (app) {
                         subject: `${user.id}`,
                         expiresIn: 3600
                     }
-                    const token = jwt.sign({ user: payload }, "SECRET8080", options);
+                    const token = jwt.sign({ user: payload }, "TOP_SECRET", options);
 
                     // return res.json(info);
                     return res.json({ token });
@@ -48,6 +43,7 @@ module.exports = function (app) {
                 }
             }
         )(req, res, next);
+        // localStorage.setItem("token", JSON.stringify(token));
     });
 
     // If the user is created successfully, proceed to log the user in
