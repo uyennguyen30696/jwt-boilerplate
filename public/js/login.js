@@ -22,18 +22,37 @@ $(document).ready(() => {
         passwordInput.val("");
     });
 
+    // Starter code
     // loginUser does a post to our "api/login" route and if successful, redirects us the the members page
+    // function loginUser(email, password) {
+    //     $.post("/api/login", {
+    //         email: email,
+    //         password: password
+    //     })
+    //         .then(() => {
+    //             window.location.replace("/members");
+    //             // If there's an error, log the error
+    //         })
+    //         .catch(err => {
+    //             console.log(err);
+    //         });
+    // }
+
+
+    // This function is modified from the starter code provided
+    // The token is sent from the server side to client side
     function loginUser(email, password) {
         $.post("/api/login", {
-            email: email,
-            password: password
-        })
+            "email": email,
+            "password": password
+        },
+            function (data, status, jqXHR) {
+                console.log('status: ' + status + " : data: " + JSON.stringify(data));
+                insertTokenIntoLocalStorage(data.token);
+            },
+            'json'
+        )
             .then(() => {
-                // console.log(user.message==="Incorrect password")
-                // if (!user) {
-                   
-                //     window.location.replace("welcome");
-                // }
                 window.location.replace("/members");
                 // If there's an error, log the error
             })
@@ -41,4 +60,10 @@ $(document).ready(() => {
                 console.log(err);
             });
     }
+
+    // The token is stored in local storage on client side
+    function insertTokenIntoLocalStorage(token) {
+        console.log('inside of new method token: ' + token)
+        localStorage.setItem("myToken", token);
+    };
 });

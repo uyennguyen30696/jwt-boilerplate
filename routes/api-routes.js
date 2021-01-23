@@ -4,6 +4,13 @@ const passport = require("../config/passport");
 // const passport= require("passport");
 const jwt = require("jsonwebtoken");
 
+// Local storage from node-localstorage npm package
+// This is for server side (back end), not client side (front end)
+if (typeof localStorage === "undefined" || localStorage === null) {
+    const LocalStorage = require('node-localstorage').LocalStorage;
+    localStorage = new LocalStorage('./scratch');
+}
+
 module.exports = function (app) {
     app.post("/api/login", async (req, res, next) => {
 
@@ -26,24 +33,18 @@ module.exports = function (app) {
                         expiresIn: 3600
                     }
                     const token = jwt.sign({ user: payload }, "TOP_SECRET", options);
+                    
+                    // Testing node-localstorage (server side)
+                    localStorage.setItem("myToken", token);
+                    console.log(localStorage.getItem("myToken"))
 
-                    // return res.json(info);
                     return res.json({ token });
-                    // req.login(
-                    //     user, { session: false }, async (err) => {
-                    //         if (err) {
-                    //             return err;
-                    //         };
-
-                           
-                    //     }
-                    // );
+                        
                 } catch (err) {
                     return err;
                 }
             }
         )(req, res, next);
-        // localStorage.setItem("token", JSON.stringify(token));
     });
 
     // If the user is created successfully, proceed to log the user in
@@ -65,6 +66,7 @@ module.exports = function (app) {
 
     // Route for logging the user out
     app.get("/logout", (req, res) => {
+        localStorage.removeItem("myToken");
         req.logout();
         res.redirect("/");
     });
@@ -80,6 +82,7 @@ module.exports = function (app) {
             res.json({
                 firstName: req.user.firstName,
                 id: req.user.id
+                // test: localStorage.getItem("myToken")
             });
         };
     });
