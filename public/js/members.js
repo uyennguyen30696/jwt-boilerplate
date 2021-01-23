@@ -34,7 +34,7 @@ $(document).ready(() => {
             }
         }
     }).then(data => {
-        $(".member-name").text("Welcome " + data.firstName);
+        $(".member-name").text("Welcome " + data.email);
         console.log("Success");
     });
 });

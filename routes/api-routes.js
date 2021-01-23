@@ -24,9 +24,9 @@ module.exports = function (app) {
                     console.log(user, info, "test");
                     
                     const payload = {
-                        // _id: user._id,
+                        _id: user._id,
                         email: user.email,
-                        password: user.password,
+                        // password: user.password,
                     }
                     const options = {
                         subject: `${user.id}`,
@@ -80,9 +80,9 @@ module.exports = function (app) {
             // Otherwise send back the user's first name and id
             // NOT sending back a password or even a hashed password
             res.json({
-                firstName: req.user.firstName,
+                email: req.user.email,
                 id: req.user.id
-                // test: localStorage.getItem("myToken")
+                // name: "test"
             });
         };
     });
