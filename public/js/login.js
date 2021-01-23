@@ -1,3 +1,5 @@
+// var axios = require("axios");
+
 $(document).ready(() => {
     // Getting references to our form and inputs
     const loginForm = $("form.login");
@@ -46,9 +48,10 @@ $(document).ready(() => {
             "email": email,
             "password": password,
         },
-            function (data, status, jqXHR) {
+            function (data, status) {
                 console.log('status: ' + status + " : data: " + JSON.stringify(data));
                 insertTokenIntoSessionStorage(data.token);
+                // sendReq();
             },
             'json'
         )
@@ -63,7 +66,63 @@ $(document).ready(() => {
 
     // The token is stored in local storage on client side
     function insertTokenIntoSessionStorage(token) {
-        console.log('inside of new method token: ' + token)
+        console.log("inside of new method token: " + token)
         sessionStorage.setItem("myToken", token);
     };
+
+    // Include token in the header along with user request
+    // var sendReq = () => {
+    //     var url = "http://localhost:8080/api/user_data";
+    //     var myToken = sessionStorage.getItem("myToken");
+
+    //     var header = new Headers();
+    //     header.append("Autherization", `Bearer ${myToken}`);
+
+    //     var req = new Request(url, {
+    //         method: "GET",
+    //         mode: "cors",
+    //         headers: header
+    //     });
+    //     fetch(req)
+    //     .then(resp => resp.json())
+    //     .then(data => {
+    //         console.log(data);
+    //     })
+    //     .catch(err => {
+    //         console.log(err);
+    //     });
+    // };
+
+    // var authAxios = axios.create({
+    //     baseURL: "http://localhost:8080/api/user_data",
+        // headers: {
+        //     Authorization: `Bearer ${sessionStorage.getItem("myToken")}`
+        // }
+    // })
+
+    // $.ajax({
+    //     url: "http://localhost:8080/api/user_data",
+    //     type: "GET",
+    //     headers: { Authorization: $`Bearer ${sessionStorage.getItem("myToken")}` },
+    //     data: formData,
+    //     error: function (err) {
+    //         switch (err.status) {
+    //             case "400":
+    //                 // bad request
+    //                 break;
+    //             case "401":
+    //                 // unauthorized
+    //                 break;
+    //             case "403":
+    //                 // forbidden
+    //                 break;
+    //             default:
+    //                 //Something bad happened
+    //                 break;
+    //         }
+    //     },
+    //     success: function (data) {
+    //         console.log("Success!");
+    //     }
+    // });
 });
