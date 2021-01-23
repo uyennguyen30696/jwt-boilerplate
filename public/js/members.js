@@ -1,4 +1,5 @@
 $(document).ready(() => {
+    // This is the start code for reference
     // This file just does a GET request to figure out which user is logged in
     // and updates the HTML on the page
     // $.get("/api/user_data"
@@ -9,7 +10,6 @@ $(document).ready(() => {
     //     $(".member-name").text("Welcome " + data.firstName);
     //     console.log("Success")
     // });
-
 
     $.ajax({
         url: "http://localhost:8080/api/user_data",
@@ -34,7 +34,7 @@ $(document).ready(() => {
             }
         }
     }).then(data => {
-        $(".member-name").text("Welcome " + data.email);
+        $(".member-name").text("Welcome " + data.firstName);
         console.log("Success");
     });
 });

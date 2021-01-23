@@ -24,9 +24,10 @@ module.exports = function (app) {
                     console.log(user, info, "test");
                     
                     const payload = {
-                        _id: user._id,
+                        id: user.id,
                         email: user.email,
-                        // password: user.password,
+                        firstName: user.firstName,
+                        lastName: user.lastName
                     }
                     const options = {
                         subject: `${user.id}`,
@@ -80,9 +81,10 @@ module.exports = function (app) {
             // Otherwise send back the user's first name and id
             // NOT sending back a password or even a hashed password
             res.json({
+                id: req.user.id,
                 email: req.user.email,
-                id: req.user.id
-                // name: "test"
+                firstName: req.user.firstName,
+                lastName: req.user.lastName
             });
         };
     });
