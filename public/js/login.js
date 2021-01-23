@@ -44,11 +44,11 @@ $(document).ready(() => {
     function loginUser(email, password) {
         $.post("/api/login", {
             "email": email,
-            "password": password
+            "password": password,
         },
             function (data, status, jqXHR) {
                 console.log('status: ' + status + " : data: " + JSON.stringify(data));
-                insertTokenIntoLocalStorage(data.token);
+                insertTokenIntoSessionStorage(data.token);
             },
             'json'
         )
@@ -59,11 +59,11 @@ $(document).ready(() => {
             .catch(err => {
                 console.log(err);
             });
-    }
+    };
 
     // The token is stored in local storage on client side
-    function insertTokenIntoLocalStorage(token) {
+    function insertTokenIntoSessionStorage(token) {
         console.log('inside of new method token: ' + token)
-        localStorage.setItem("myToken", token);
+        sessionStorage.setItem("myToken", token);
     };
 });
