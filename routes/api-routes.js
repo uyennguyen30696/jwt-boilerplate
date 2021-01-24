@@ -15,32 +15,53 @@ module.exports = function (app) {
     app.post("/api/login", async (req, res, next) => {
 
         passport.authenticate(
-            "local", {session: false},
+            "local", { session: false },
             async (err, user, info) => {
                 try {
                     if (err || !user) {
                         return next(err);
                     }
                     console.log(user, info, "test");
-                    
-                    const payload = {
-                        id: user.id,
-                        email: user.email,
-                        firstName: user.firstName,
-                        lastName: user.lastName
-                    }
-                    const options = {
-                        subject: `${user.id}`,
-                        expiresIn: 3600
-                    }
-                    const token = jwt.sign({ user: payload }, "TOP_SECRET", options);
-                    
-                    // Testing node-localstorage (server side)
-                    localStorage.setItem("myToken", token);
-                    console.log(localStorage.getItem("myToken"))
 
-                    return res.json({ token });
-                        
+                    // const payload = {
+                    //     id: user.id,
+                    //     email: user.email,
+                    //     firstName: user.firstName,
+                    //     lastName: user.lastName
+                    // }
+                    // const options = {
+                    //     subject: `${user.id}`,
+                    //     expiresIn: 3600
+                    // }
+                    // const token = jwt.sign({ user: payload }, "TOP_SECRET", options);
+
+                    // // Testing node-localstorage (server side)
+                    // localStorage.setItem("myToken", token);
+                    // console.log(localStorage.getItem("myToken"))
+
+                    // return res.json({ token });
+                    req.login(
+                        user,
+                        { session: true },
+                        async (error) => {
+                            if (error) {
+                                return next(error);
+                            }
+                            const payload = {
+                                id: user.id,
+                                email: user.email,
+                                firstName: user.firstName,
+                                lastName: user.lastName
+                            }
+                            const options = {
+                                subject: `${user.id}`,
+                                expiresIn: 3600
+                            }
+                            const token = jwt.sign({ user: payload }, 'TOP_SECRET', options);
+                            return res.json({ token });
+                        }
+                    );
+
                 } catch (err) {
                     return err;
                 }
